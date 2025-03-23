@@ -3,15 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Yaduraj Singh - iOS Developer, Web Developer, and AI/ML Engineer Portfolio">
+    <meta name="keywords" content="iOS Developer, Web Developer, AI/ML Engineer, Portfolio, Swift, React, Python, TensorFlow">
+    <meta name="author" content="Yaduraj Singh">
+    <meta name="theme-color" content="#000000">
     <title>Yaduraj Singh - Portfolio</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 </head>
 <body>
     <nav class="navbar">
         <div class="nav-content">
             <div class="logo">YS</div>
+            <button class="mobile-nav-toggle" aria-label="toggle navigation">
+                <i class="fas fa-bars"></i>
+            </button>
             <ul class="nav-links">
                 <li><a href="#home">Home</a></li>
                 <li><a href="#about">About</a></li>
@@ -23,15 +32,51 @@
     </nav>
 
     <section id="home" class="hero">
+        <div class="hero-background"></div>
         <div class="hero-content">
-            <h1>Yaduraj Singh</h1>
-            <div class="typewriter-container">
-                <p class="tagline">iOS Developer | Web Developer | AI/ML Engineer</p>
+            <div class="hero-text">
+                <div class="hero-intro">Hello, I'm</div>
+                <h1>Yaduraj Singh</h1>
+                <div class="typewriter-container">
+                    <p class="tagline">iOS Developer | Web Developer | AI/ML Engineer</p>
+                </div>
+                <p class="hero-description">Crafting innovative solutions through code and creativity</p>
+                <div class="cta-buttons">
+                    <a href="#github" class="btn primary">View GitHub</a>
+                    <a href="#contact" class="btn secondary">Contact Me</a>
+                </div>
             </div>
-            <div class="cta-buttons">
-                <a href="#github" class="btn primary">View GitHub</a>
-                <a href="#contact" class="btn secondary">Contact Me</a>
+            <div class="hero-visual">
+                <div class="code-block">
+                    <pre><code>
+class Developer {
+    constructor() {
+        this.name = "Yaduraj Singh";
+        this.traits = ["creative", "problem-solver"];
+        this.skills = {
+            ios: ["Swift", "SwiftUI", "UIKit"],
+            web: ["JavaScript", "React", "HTML/CSS"],
+            ai: ["Python", "TensorFlow", "PyTorch"]
+        };
+    }
+    
+    createSolution(problem) {
+        return this.skills
+            .map(skill => skill.apply(problem))
+            .filter(result => result.isInnovative())
+            .sort(result => result.efficiency)
+            .pop();
+    }
+}</code></pre>
+                </div>
             </div>
+        </div>
+        <div class="scroll-indicator">
+            <a href="#about">
+                <div class="mouse">
+                    <div class="wheel"></div>
+                </div>
+            </a>
         </div>
     </section>
 
@@ -40,7 +85,15 @@
             <h2>About Me</h2>
             <div class="about-content">
                 <div class="about-text">
-                    <p>I am a passionate developer with expertise in iOS app development, web development, and AI/ML engineering. With a strong foundation in creating innovative solutions, I strive to build applications that make a difference.</p>
+                    <p class="about-intro">A passionate developer with expertise spanning multiple domains</p>
+                    <p>I am driven by the challenge of solving complex problems through elegant code solutions. With experience in iOS development, web technologies, and AI/ML engineering, I bring a versatile skill set to every project.</p>
+                    <p>My goal is to build applications that are not only functional but also deliver exceptional user experiences. I constantly explore new technologies to enhance my toolkit and create more innovative solutions.</p>
+                    <div class="about-tags">
+                        <span class="tag">Problem Solver</span>
+                        <span class="tag">Tech Enthusiast</span>
+                        <span class="tag">Continuous Learner</span>
+                        <span class="tag">Detail-Oriented</span>
+                    </div>
                 </div>
                 <div class="about-stats">
                     <div class="stat">
@@ -51,6 +104,14 @@
                         <h3>20+</h3>
                         <p>Projects Completed</p>
                     </div>
+                    <div class="stat">
+                        <h3>3</h3>
+                        <p>Specializations</p>
+                    </div>
+                    <div class="stat">
+                        <h3>15+</h3>
+                        <p>Happy Clients</p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -58,34 +119,141 @@
 
     <section id="skills" class="skills">
         <div class="container">
-            <h2>Skills</h2>
-            <div class="skills-grid">
-                <div class="skill-category">
-                    <h3>iOS Development</h3>
-                    <ul>
-                        <li>Swift</li>
-                        <li>SwiftUI</li>
-                        <li>UIKit</li>
-                        <li>Core Data</li>
-                    </ul>
+            <div class="section-header">
+                <h2>My Expertise</h2>
+                <p class="section-subtitle">The tech stack I've mastered over the years</p>
+            </div>
+            
+            <div class="skills-tabs">
+                <div class="tabs-header">
+                    <button class="tab-btn active" data-tab="ios">iOS Development</button>
+                    <button class="tab-btn" data-tab="web">Web Development</button>
+                    <button class="tab-btn" data-tab="ai">AI/ML Engineering</button>
                 </div>
-                <div class="skill-category">
-                    <h3>Web Development</h3>
-                    <ul>
-                        <li>HTML5</li>
-                        <li>CSS3</li>
-                        <li>JavaScript</li>
-                        <li>React</li>
-                    </ul>
-                </div>
-                <div class="skill-category">
-                    <h3>AI/ML</h3>
-                    <ul>
-                        <li>Python</li>
-                        <li>TensorFlow</li>
-                        <li>PyTorch</li>
-                        <li>Machine Learning</li>
-                    </ul>
+                
+                <div class="tabs-content">
+                    <div class="tab-content active" id="ios-content">
+                        <div class="skills-grid">
+                            <div class="skill-item">
+                                <div class="skill-info">
+                                    <span>Swift</span>
+                                    <span class="skill-percentage">95%</span>
+                                </div>
+                                <div class="skill-progress-bg">
+                                    <div class="skill-progress" style="width: 95%"></div>
+                                </div>
+                            </div>
+                            <div class="skill-item">
+                                <div class="skill-info">
+                                    <span>SwiftUI</span>
+                                    <span class="skill-percentage">90%</span>
+                                </div>
+                                <div class="skill-progress-bg">
+                                    <div class="skill-progress" style="width: 90%"></div>
+                                </div>
+                            </div>
+                            <div class="skill-item">
+                                <div class="skill-info">
+                                    <span>UIKit</span>
+                                    <span class="skill-percentage">85%</span>
+                                </div>
+                                <div class="skill-progress-bg">
+                                    <div class="skill-progress" style="width: 85%"></div>
+                                </div>
+                            </div>
+                            <div class="skill-item">
+                                <div class="skill-info">
+                                    <span>Core Data</span>
+                                    <span class="skill-percentage">80%</span>
+                                </div>
+                                <div class="skill-progress-bg">
+                                    <div class="skill-progress" style="width: 80%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="tab-content" id="web-content">
+                        <div class="skills-grid">
+                            <div class="skill-item">
+                                <div class="skill-info">
+                                    <span>HTML5/CSS3</span>
+                                    <span class="skill-percentage">90%</span>
+                                </div>
+                                <div class="skill-progress-bg">
+                                    <div class="skill-progress" style="width: 90%"></div>
+                                </div>
+                            </div>
+                            <div class="skill-item">
+                                <div class="skill-info">
+                                    <span>JavaScript</span>
+                                    <span class="skill-percentage">85%</span>
+                                </div>
+                                <div class="skill-progress-bg">
+                                    <div class="skill-progress" style="width: 85%"></div>
+                                </div>
+                            </div>
+                            <div class="skill-item">
+                                <div class="skill-info">
+                                    <span>React</span>
+                                    <span class="skill-percentage">80%</span>
+                                </div>
+                                <div class="skill-progress-bg">
+                                    <div class="skill-progress" style="width: 80%"></div>
+                                </div>
+                            </div>
+                            <div class="skill-item">
+                                <div class="skill-info">
+                                    <span>Node.js</span>
+                                    <span class="skill-percentage">75%</span>
+                                </div>
+                                <div class="skill-progress-bg">
+                                    <div class="skill-progress" style="width: 75%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="tab-content" id="ai-content">
+                        <div class="skills-grid">
+                            <div class="skill-item">
+                                <div class="skill-info">
+                                    <span>Python</span>
+                                    <span class="skill-percentage">90%</span>
+                                </div>
+                                <div class="skill-progress-bg">
+                                    <div class="skill-progress" style="width: 90%"></div>
+                                </div>
+                            </div>
+                            <div class="skill-item">
+                                <div class="skill-info">
+                                    <span>TensorFlow</span>
+                                    <span class="skill-percentage">80%</span>
+                                </div>
+                                <div class="skill-progress-bg">
+                                    <div class="skill-progress" style="width: 80%"></div>
+                                </div>
+                            </div>
+                            <div class="skill-item">
+                                <div class="skill-info">
+                                    <span>PyTorch</span>
+                                    <span class="skill-percentage">75%</span>
+                                </div>
+                                <div class="skill-progress-bg">
+                                    <div class="skill-progress" style="width: 75%"></div>
+                                </div>
+                            </div>
+                            <div class="skill-item">
+                                <div class="skill-info">
+                                    <span>Machine Learning</span>
+                                    <span class="skill-percentage">85%</span>
+                                </div>
+                                <div class="skill-progress-bg">
+                                    <div class="skill-progress" style="width: 85%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -93,7 +261,10 @@
 
     <section id="github" class="github">
         <div class="container">
-            <h2>GitHub Activity</h2>
+            <div class="section-header">
+                <h2>GitHub Presence</h2>
+                <p class="section-subtitle">My open source contributions and repositories</p>
+            </div>
             <div class="github-content">
                 <div class="github-stats">
                     <div class="stat-card">
@@ -113,7 +284,10 @@
                     </div>
                 </div>
                 <div class="github-calendar">
-                    <h3>Contribution Activity</h3>
+                    <div class="calendar-header">
+                        <h3>Contribution Activity</h3>
+                        <a href="https://github.com/YadurajManu" target="_blank" class="github-link">View Full Profile <i class="fas fa-external-link-alt"></i></a>
+                    </div>
                     <div class="calendar-container">
                         <!-- GitHub contribution calendar with green dots -->
                         <img src="https://ghchart.rshah.org/YadurajManu" alt="Yaduraj's Github contributions" class="contribution-chart" style="background-color: #fff;">
@@ -132,6 +306,11 @@
                                 <span><i class="fas fa-star"></i> 1</span>
                                 <span><i class="fas fa-code-branch"></i> 2</span>
                             </div>
+                            <div class="repo-tags">
+                                <span class="repo-tag">Python</span>
+                                <span class="repo-tag">ML</span>
+                                <span class="repo-tag">Data Science</span>
+                            </div>
                             <a href="https://github.com/YadurajManu/exoplanet_detection" target="_blank" class="btn secondary">View Repository</a>
                         </div>
                         <div class="repo-card">
@@ -144,31 +323,63 @@
                                 <span><i class="fas fa-star"></i> 1</span>
                                 <span><i class="fas fa-code-branch"></i> 1</span>
                             </div>
+                            <div class="repo-tags">
+                                <span class="repo-tag">Python</span>
+                                <span class="repo-tag">NLP</span>
+                                <span class="repo-tag">AI</span>
+                            </div>
                             <a href="https://github.com/YadurajManu/Jarvis" target="_blank" class="btn secondary">View Repository</a>
                         </div>
                         <div class="repo-card">
                             <div class="repo-header">
-                                <i class="fas fa-globe"></i>
-                                <h4>RESTful_API</h4>
+                                <i class="fas fa-fire"></i>
+                                <h4>CrazyShiit</h4>
                             </div>
-                            <p>Modern RESTful API implementation with best practices</p>
+                            <p>A collection of experimental coding projects and creative tech experiments</p>
                             <div class="repo-stats">
                                 <span><i class="fas fa-star"></i> 1</span>
                                 <span><i class="fas fa-code-branch"></i> 1</span>
                             </div>
-                            <a href="https://github.com/YadurajManu/RESTful_API" target="_blank" class="btn secondary">View Repository</a>
+                            <div class="repo-tags">
+                                <span class="repo-tag">JavaScript</span>
+                                <span class="repo-tag">Experimental</span>
+                                <span class="repo-tag">Creative Coding</span>
+                            </div>
+                            <a href="https://github.com/YadurajManu/CrazyShiit" target="_blank" class="btn secondary">View Repository</a>
                         </div>
                         <div class="repo-card">
                             <div class="repo-header">
-                                <i class="fas fa-gamepad"></i>
-                                <h4>Flappy-Bird-Clone</h4>
+                                <i class="fas fa-mobile-alt"></i>
+                                <h4>Muni</h4>
                             </div>
-                            <p>Classic Flappy Bird game clone built with modern web technologies</p>
+                            <p>Mobile app platform for community-based networking and resource sharing</p>
                             <div class="repo-stats">
                                 <span><i class="fas fa-star"></i> 1</span>
                                 <span><i class="fas fa-code-branch"></i> 1</span>
                             </div>
-                            <a href="https://github.com/YadurajManu/Flappy-Bird-Clone" target="_blank" class="btn secondary">View Repository</a>
+                            <div class="repo-tags">
+                                <span class="repo-tag">Swift</span>
+                                <span class="repo-tag">Firebase</span>
+                                <span class="repo-tag">iOS</span>
+                            </div>
+                            <a href="https://github.com/YadurajManu/Muni" target="_blank" class="btn secondary">View Repository</a>
+                        </div>
+                        <div class="repo-card">
+                            <div class="repo-header">
+                                <i class="fas fa-brain"></i>
+                                <h4>Rishi</h4>
+                            </div>
+                            <p>AI-based personal development coach and habit tracking application</p>
+                            <div class="repo-stats">
+                                <span><i class="fas fa-star"></i> 1</span>
+                                <span><i class="fas fa-code-branch"></i> 1</span>
+                            </div>
+                            <div class="repo-tags">
+                                <span class="repo-tag">Python</span>
+                                <span class="repo-tag">TensorFlow</span>
+                                <span class="repo-tag">React Native</span>
+                            </div>
+                            <a href="https://github.com/YadurajManu/Rishi" target="_blank" class="btn secondary">View Repository</a>
                         </div>
                     </div>
                 </div>
@@ -178,9 +389,15 @@
 
     <section id="contact" class="contact">
         <div class="container">
-            <h2>Contact Me</h2>
+            <div class="section-header">
+                <h2>Get In Touch</h2>
+                <p class="section-subtitle">Let's discuss your project or opportunities</p>
+            </div>
             <div class="contact-content">
                 <div class="contact-info">
+                    <div class="contact-intro">
+                        <p>I'm currently open to freelance opportunities, collaborations, and interesting projects. Feel free to reach out if you'd like to work together or just say hello!</p>
+                    </div>
                     <div class="contact-item">
                         <i class="fas fa-envelope"></i>
                         <a href="mailto:yadurajsingham@gmail.com">yadurajsingham@gmail.com</a>
@@ -193,11 +410,29 @@
                         <i class="fab fa-linkedin"></i>
                         <a href="https://www.linkedin.com/in/yaduraj-singh-a3479333a/" target="_blank">linkedin.com/in/yaduraj-singh</a>
                     </div>
+                    <div class="social-links">
+                        <a href="https://github.com/YadurajManu" target="_blank" class="social-link"><i class="fab fa-github"></i></a>
+                        <a href="https://www.linkedin.com/in/yaduraj-singh-a3479333a/" target="_blank" class="social-link"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#" target="_blank" class="social-link"><i class="fab fa-twitter"></i></a>
+                        <a href="#" target="_blank" class="social-link"><i class="fab fa-instagram"></i></a>
+                    </div>
                 </div>
                 <form class="contact-form">
-                    <input type="text" placeholder="Name" required>
-                    <input type="email" placeholder="Email" required>
-                    <textarea placeholder="Message" required></textarea>
+                    <div class="form-header">
+                        <h3>Send Me a Message</h3>
+                    </div>
+                    <div class="form-group">
+                        <label for="name">Name</label>
+                        <input type="text" id="name" placeholder="Your Name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" placeholder="Your Email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Message</label>
+                        <textarea id="message" placeholder="Your Message" required></textarea>
+                    </div>
                     <button type="submit" class="btn primary">Send Message</button>
                 </form>
             </div>

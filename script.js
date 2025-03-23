@@ -1,3 +1,36 @@
+// Mobile navigation
+document.addEventListener('DOMContentLoaded', function() {
+    const mobileNavToggle = document.querySelector('.mobile-nav-toggle');
+    const navLinks = document.querySelector('.nav-links');
+    const navItems = document.querySelectorAll('.nav-links a');
+    
+    if (mobileNavToggle) {
+        mobileNavToggle.addEventListener('click', function() {
+            navLinks.classList.toggle('active');
+            
+            // Change icon based on menu state
+            const icon = this.querySelector('i');
+            if (navLinks.classList.contains('active')) {
+                icon.classList.remove('fa-bars');
+                icon.classList.add('fa-times');
+            } else {
+                icon.classList.remove('fa-times');
+                icon.classList.add('fa-bars');
+            }
+        });
+    }
+    
+    // Close mobile menu when clicking on a link
+    navItems.forEach(item => {
+        item.addEventListener('click', function() {
+            navLinks.classList.remove('active');
+            const icon = mobileNavToggle.querySelector('i');
+            icon.classList.remove('fa-times');
+            icon.classList.add('fa-bars');
+        });
+    });
+});
+
 // Smooth scrolling for navigation links
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
@@ -6,6 +39,67 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             behavior: 'smooth'
         });
     });
+});
+
+// Skills tab functionality
+document.addEventListener('DOMContentLoaded', function() {
+    const tabBtns = document.querySelectorAll('.tab-btn');
+    const tabContents = document.querySelectorAll('.tab-content');
+    
+    tabBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            // Remove active class from all buttons and contents
+            tabBtns.forEach(btn => btn.classList.remove('active'));
+            tabContents.forEach(content => content.classList.remove('active'));
+            
+            // Add active class to clicked button
+            btn.classList.add('active');
+            
+            // Get the tab to activate
+            const tabToActivate = btn.getAttribute('data-tab');
+            document.getElementById(`${tabToActivate}-content`).classList.add('active');
+        });
+    });
+    
+    // Animate skill progress bars when they come into view
+    const skillItems = document.querySelectorAll('.skill-item');
+    
+    const observerOptions = {
+        threshold: 0.5,
+        rootMargin: '0px 0px -100px 0px'
+    };
+    
+    if ('IntersectionObserver' in window) {
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const progressBar = entry.target.querySelector('.skill-progress');
+                    const width = progressBar.style.width;
+                    
+                    // Reset width first
+                    progressBar.style.width = '0';
+                    
+                    // Animate after a small delay
+                    setTimeout(() => {
+                        progressBar.style.width = width;
+                    }, 200);
+                    
+                    // Unobserve after animation
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+        
+        skillItems.forEach(item => {
+            observer.observe(item);
+        });
+    } else {
+        // Fallback for browsers that don't support IntersectionObserver
+        skillItems.forEach(item => {
+            const progressBar = item.querySelector('.skill-progress');
+            progressBar.style.width = progressBar.getAttribute('data-width');
+        });
+    }
 });
 
 // Project data
@@ -99,6 +193,31 @@ document.head.appendChild(style);
 // Initialize project cards when the DOM is loaded
 document.addEventListener('DOMContentLoaded', createProjectCards);
 
+// Typewriter effect
+function typeWriter(element, text, speed = 100) {
+    let i = 0;
+    element.innerHTML = '';
+    
+    function type() {
+        if (i < text.length) {
+            element.innerHTML += text.charAt(i);
+            i++;
+            setTimeout(type, speed);
+        }
+    }
+    
+    type();
+}
+
+// Initialize typewriter effect when the page loads
+document.addEventListener('DOMContentLoaded', function() {
+    const tagline = document.querySelector('.tagline');
+    if (tagline) {
+        const originalText = tagline.textContent;
+        typeWriter(tagline, originalText, 100);
+    }
+});
+
 // Form submission handling
 const contactForm = document.querySelector('.contact-form');
 if (contactForm) {
@@ -122,25 +241,58 @@ window.addEventListener('scroll', function() {
     }
 });
 
-// Typewriter effect
-function typeWriter(element, text, speed = 100) {
-    let i = 0;
-    element.innerHTML = '';
-    
-    function type() {
-        if (i < text.length) {
-            element.innerHTML += text.charAt(i);
-            i++;
-            setTimeout(type, speed);
-        }
-    }
-    
-    type();
-}
+// Lazy load images
+document.addEventListener("DOMContentLoaded", function() {
+    var lazyImages = [].slice.call(document.querySelectorAll("img.lazy"));
 
-// Initialize typewriter effect when the page loads
-document.addEventListener('DOMContentLoaded', function() {
-    const tagline = document.querySelector('.tagline');
-    const originalText = tagline.textContent;
-    typeWriter(tagline, originalText, 100);
+    if ("IntersectionObserver" in window) {
+        let lazyImageObserver = new IntersectionObserver(function(entries, observer) {
+            entries.forEach(function(entry) {
+                if (entry.isIntersecting) {
+                    let lazyImage = entry.target;
+                    lazyImage.src = lazyImage.dataset.src;
+                    lazyImage.classList.remove("lazy");
+                    lazyImageObserver.unobserve(lazyImage);
+                }
+            });
+        });
+
+        lazyImages.forEach(function(lazyImage) {
+            lazyImageObserver.observe(lazyImage);
+        });
+    } else {
+        // Fallback for browsers without intersection observer
+        let active = false;
+
+        const lazyLoad = function() {
+            if (active === false) {
+                active = true;
+
+                setTimeout(function() {
+                    lazyImages.forEach(function(lazyImage) {
+                        if ((lazyImage.getBoundingClientRect().top <= window.innerHeight && lazyImage.getBoundingClientRect().bottom >= 0) && getComputedStyle(lazyImage).display !== "none") {
+                            lazyImage.src = lazyImage.dataset.src;
+                            lazyImage.classList.remove("lazy");
+
+                            lazyImages = lazyImages.filter(function(image) {
+                                return image !== lazyImage;
+                            });
+
+                            if (lazyImages.length === 0) {
+                                document.removeEventListener("scroll", lazyLoad);
+                                window.removeEventListener("resize", lazyLoad);
+                                window.removeEventListener("orientationchange", lazyLoad);
+                            }
+                        }
+                    });
+
+                    active = false;
+                }, 200);
+            }
+        };
+
+        document.addEventListener("scroll", lazyLoad);
+        window.addEventListener("resize", lazyLoad);
+        window.addEventListener("orientationchange", lazyLoad);
+    }
 }); 
