@@ -65,79 +65,345 @@ document.addEventListener('DOMContentLoaded', function() {
         sr.reveal('.contact-form', { delay: 300 });
     }
     
-    // Advanced typewriter effect with cursor
+    // Enhanced interactive typewriter effect
     const typewriterTargets = document.querySelectorAll('.tagline');
     
     typewriterTargets.forEach(element => {
-        const text = element.textContent;
-        element.innerHTML = '';
-        element.style.borderRight = '2px solid #000';
+        // Store original text
+        const originalText = element.textContent;
+        element.textContent = '';
         
-        let i = 0;
+        // Create and append cursor element
+        const cursor = document.createElement('span');
+        cursor.classList.add('cursor');
+        cursor.textContent = '|';
+        cursor.style.marginLeft = '2px';
+        cursor.style.animation = 'blink 1s infinite';
+        element.appendChild(cursor);
+        
+        // Create styles for blinking cursor
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes blink {
+                0%, 100% { opacity: 1; }
+                50% { opacity: 0; }
+            }
+        `;
+        document.head.appendChild(style);
+        
+        // Text strings to type
+        const textStrings = [
+            "iOS Developer | Web Developer | AI/ML Engineer",
+            "Building Native iOS Applications",
+            "Creating Interactive Web Experiences",
+            "Developing AI & Machine Learning Solutions"
+        ];
+        
+        let currentTextIndex = 0;
+        let charIndex = 0;
         let isDeleting = false;
-        let currentText = '';
+        let typingSpeed = 80;
         
         function typeEffect() {
-            const fullText = text;
-            const typingSpeed = isDeleting ? 30 : 100;
+            const currentText = textStrings[currentTextIndex];
             
+            // Set typing speed based on action
             if (isDeleting) {
-                currentText = fullText.substring(0, currentText.length - 1);
+                typingSpeed = 40;
             } else {
-                currentText = fullText.substring(0, currentText.length + 1);
+                typingSpeed = 80;
             }
             
-            element.innerHTML = currentText;
+            // Get text without cursor
+            const textWithoutCursor = element.textContent.slice(0, -1);
             
-            if (!isDeleting && currentText === fullText) {
-                // Pause at the end
-                setTimeout(() => {
-                    element.style.borderRight = '2px solid transparent';
-                    setTimeout(() => {
-                        element.style.borderRight = '2px solid #000';
-                        setTimeout(() => {
-                            isDeleting = true;
-                            typeEffect();
-                        }, 1000);
-                    }, 500);
-                }, 2000);
-            } else if (isDeleting && currentText === '') {
-                isDeleting = false;
-                // Pause before starting again
-                setTimeout(typeEffect, 1000);
-            } else {
+            if (!isDeleting && charIndex < currentText.length) {
+                // Add next character
+                element.textContent = currentText.slice(0, charIndex + 1);
+                element.appendChild(cursor);
+                charIndex++;
                 setTimeout(typeEffect, typingSpeed);
+            } else if (isDeleting && charIndex > 0) {
+                // Remove last character
+                element.textContent = currentText.slice(0, charIndex - 1);
+                element.appendChild(cursor);
+                charIndex--;
+                setTimeout(typeEffect, typingSpeed);
+            } else if (!isDeleting) {
+                // Pause at the end
+                isDeleting = true;
+                setTimeout(typeEffect, 2000);
+            } else {
+                // Move to next text string
+                isDeleting = false;
+                currentTextIndex = (currentTextIndex + 1) % textStrings.length;
+                charIndex = 0;
+                setTimeout(typeEffect, 500);
             }
         }
         
-        setTimeout(typeEffect, 1000);
+        // Start typing effect with a slight delay
+        setTimeout(typeEffect, 1200);
     });
-});
-
-// Smooth scrolling for navigation links
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function (e) {
-        e.preventDefault();
-        
-        // Add active class to the clicked nav item
-        document.querySelectorAll('.nav-links a').forEach(item => {
-            item.classList.remove('active-link');
-        });
-        this.classList.add('active-link');
-        
-        // Smooth scroll with easing
-        const targetId = this.getAttribute('href');
-        const targetElement = document.querySelector(targetId);
-        
-        if (targetElement) {
-            const offsetTop = targetElement.getBoundingClientRect().top + window.pageYOffset;
+    
+    // Enhanced code block animations
+    const codeBlock = document.querySelector('.code-block');
+    const codeClassSpans = document.querySelectorAll('.code-class');
+    const codeFunctionSpans = document.querySelectorAll('.code-function');
+    const codeStringSpans = document.querySelectorAll('.code-string');
+    const codeParamSpans = document.querySelectorAll('.code-param');
+    
+    // Add syntax highlighting styles
+    const syntaxStyles = document.createElement('style');
+    syntaxStyles.textContent = `
+        .code-class { color: #ff79c6; }
+        .code-function { color: #50fa7b; }
+        .code-string { color: #f1fa8c; }
+        .code-param { color: #bd93f9; }
+        .code-block code .hljs-keyword { color: #ff79c6; }
+    `;
+    document.head.appendChild(syntaxStyles);
+    
+    // Add 3D tilt effect to code block
+    if (codeBlock) {
+        codeBlock.addEventListener('mousemove', function(e) {
+            const rect = this.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
             
-            window.scrollTo({
-                top: offsetTop,
-                behavior: 'smooth'
-            });
-        }
+            const centerX = rect.width / 2;
+            const centerY = rect.height / 2;
+            
+            const moveX = (x - centerX) / 20;
+            const moveY = (y - centerY) / 20;
+            
+            this.style.transform = `perspective(800px) rotateY(${moveX}deg) rotateX(${-moveY}deg) translateZ(10px)`;
+            
+            // Add shine effect
+            const shine = this.querySelector('.shine') || document.createElement('div');
+            if (!this.querySelector('.shine')) {
+                shine.classList.add('shine');
+                this.appendChild(shine);
+                shine.style.position = 'absolute';
+                shine.style.top = '0';
+                shine.style.left = '0';
+                shine.style.width = '100%';
+                shine.style.height = '100%';
+                shine.style.backgroundImage = `radial-gradient(circle at ${x}px ${y}px, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0) 80%)`;
+                shine.style.pointerEvents = 'none';
+                shine.style.borderRadius = 'inherit';
+                shine.style.zIndex = '1';
+            } else {
+                shine.style.backgroundImage = `radial-gradient(circle at ${x}px ${y}px, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0) 80%)`;
+            }
+        });
+        
+        codeBlock.addEventListener('mouseleave', function() {
+            this.style.transform = 'perspective(800px) rotateY(-10deg) translateY(0)';
+            
+            const shine = this.querySelector('.shine');
+            if (shine) {
+                shine.style.backgroundImage = 'none';
+            }
+        });
+    }
+    
+    // Add scroll-based navbar background change
+    const navbar = document.querySelector('.navbar');
+    
+    if (navbar) {
+        window.addEventListener('scroll', function() {
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+    }
+    
+    // Smooth scroll for navigation with offset for fixed header
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            const targetId = this.getAttribute('href');
+            const targetElement = document.querySelector(targetId);
+            
+            if (targetElement) {
+                const navbarHeight = document.querySelector('.navbar').offsetHeight;
+                const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset;
+                
+                window.scrollTo({
+                    top: targetPosition - navbarHeight,
+                    behavior: 'smooth'
+                });
+            }
+        });
     });
+    
+    // Add active states to nav links based on scroll position
+    const sections = document.querySelectorAll('section');
+    
+    function highlightNavigation() {
+        const scrollPosition = window.scrollY + 100;
+        
+        sections.forEach(section => {
+            const sectionTop = section.offsetTop;
+            const sectionHeight = section.offsetHeight;
+            const sectionId = section.getAttribute('id');
+            
+            if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
+                document.querySelectorAll('.nav-links a').forEach(link => {
+                    link.classList.remove('active');
+                    if (link.getAttribute('href') === '#' + sectionId) {
+                        link.classList.add('active');
+                    }
+                });
+            }
+        });
+    }
+    
+    window.addEventListener('scroll', highlightNavigation);
+    highlightNavigation();
+    
+    // Enhanced particle background for hero section
+    const heroSection = document.querySelector('.hero');
+    
+    if (heroSection) {
+        const canvas = document.createElement('canvas');
+        canvas.classList.add('hero-particles');
+        canvas.style.position = 'absolute';
+        canvas.style.top = '0';
+        canvas.style.left = '0';
+        canvas.style.width = '100%';
+        canvas.style.height = '100%';
+        canvas.style.zIndex = '1';
+        canvas.style.pointerEvents = 'none';
+        canvas.style.opacity = '0.15';
+        
+        heroSection.insertBefore(canvas, heroSection.firstChild);
+        
+        const ctx = canvas.getContext('2d');
+        let width, height;
+        const particles = [];
+        let mouseX, mouseY, animationFrame;
+        
+        function initCanvas() {
+            width = canvas.width = canvas.offsetWidth;
+            height = canvas.height = canvas.offsetHeight;
+            
+            // Create particles
+            const particleCount = Math.min(Math.floor(width * height / 15000), 120);
+            particles.length = 0;
+            
+            for (let i = 0; i < particleCount; i++) {
+                particles.push({
+                    x: Math.random() * width,
+                    y: Math.random() * height,
+                    radius: Math.random() * 2 + 1,
+                    vx: Math.random() * 1 - 0.5,
+                    vy: Math.random() * 1 - 0.5,
+                    opacity: Math.random() * 0.5 + 0.3
+                });
+            }
+        }
+        
+        function drawParticles() {
+            ctx.clearRect(0, 0, width, height);
+            
+            // Update and draw particles
+            for (let i = 0; i < particles.length; i++) {
+                const p = particles[i];
+                
+                // Add some random movement
+                p.vx += (Math.random() - 0.5) * 0.01;
+                p.vy += (Math.random() - 0.5) * 0.01;
+                
+                // Limit speed
+                p.vx = Math.max(Math.min(p.vx, 1), -1);
+                p.vy = Math.max(Math.min(p.vy, 1), -1);
+                
+                // Update position
+                p.x += p.vx;
+                p.y += p.vy;
+                
+                // Wrap around edges
+                if (p.x < 0) p.x = width;
+                if (p.y < 0) p.y = height;
+                if (p.x > width) p.x = 0;
+                if (p.y > height) p.y = 0;
+                
+                // Draw particle
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(0, 0, 0, ${p.opacity})`;
+                ctx.fill();
+            }
+            
+            // Draw connections between nearby particles
+            ctx.strokeStyle = 'rgba(0, 0, 0, 0.1)';
+            ctx.lineWidth = 0.5;
+            
+            for (let i = 0; i < particles.length; i++) {
+                for (let j = i + 1; j < particles.length; j++) {
+                    const p1 = particles[i];
+                    const p2 = particles[j];
+                    const dx = p1.x - p2.x;
+                    const dy = p1.y - p2.y;
+                    const distance = Math.sqrt(dx * dx + dy * dy);
+                    
+                    if (distance < 100) {
+                        ctx.beginPath();
+                        ctx.moveTo(p1.x, p1.y);
+                        ctx.lineTo(p2.x, p2.y);
+                        ctx.globalAlpha = (1 - distance / 100) * 0.2;
+                        ctx.stroke();
+                        ctx.globalAlpha = 1;
+                    }
+                }
+            }
+            
+            // Mouse interaction
+            if (mouseX && mouseY) {
+                for (let i = 0; i < particles.length; i++) {
+                    const p = particles[i];
+                    const dx = p.x - mouseX;
+                    const dy = p.y - mouseY;
+                    const distance = Math.sqrt(dx * dx + dy * dy);
+                    
+                    if (distance < 120) {
+                        const angle = Math.atan2(dy, dx);
+                        const force = (120 - distance) / 1500;
+                        p.vx += Math.cos(angle) * force;
+                        p.vy += Math.sin(angle) * force;
+                    }
+                }
+            }
+            
+            animationFrame = requestAnimationFrame(drawParticles);
+        }
+        
+        // Add mouse interaction
+        heroSection.addEventListener('mousemove', function(e) {
+            const rect = heroSection.getBoundingClientRect();
+            mouseX = e.clientX - rect.left;
+            mouseY = e.clientY - rect.top;
+        });
+        
+        // Handle window resize
+        window.addEventListener('resize', function() {
+            initCanvas();
+        });
+        
+        // Initialize and start animation
+        initCanvas();
+        drawParticles();
+        
+        // Cleanup on page leave
+        window.addEventListener('beforeunload', function() {
+            cancelAnimationFrame(animationFrame);
+        });
+    }
 });
 
 // Skills tab functionality with enhanced animations

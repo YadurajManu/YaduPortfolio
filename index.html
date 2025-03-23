@@ -41,10 +41,10 @@
                 <div class="typewriter-container">
                     <p class="tagline">iOS Developer | Web Developer | AI/ML Engineer</p>
                 </div>
-                <p class="hero-description">Crafting innovative solutions through code and creativity</p>
+                <p class="hero-description">I create innovative digital experiences by combining code, creativity, and cutting-edge technology to build solutions that make an impact.</p>
                 <div class="cta-buttons">
-                    <a href="#github" class="btn primary">View GitHub</a>
-                    <a href="#contact" class="btn secondary">Contact Me</a>
+                    <a href="#github" class="btn primary">View My Work</a>
+                    <a href="#contact" class="btn secondary">Get In Touch</a>
                 </div>
             </div>
             <div class="hero-visual">
@@ -54,24 +54,30 @@
                         <span class="code-dot yellow"></span>
                         <span class="code-dot green"></span>
                     </div>
-                    <pre><code>
-class Developer {
+                    <pre><code class="language-javascript">
+class <span class="code-class">Developer</span> {
     constructor() {
-        this.name = "Yaduraj Singh";
-        this.traits = ["creative", "problem-solver"];
-        this.skills = {
-            ios: ["Swift", "SwiftUI", "UIKit"],
-            web: ["JavaScript", "React", "HTML/CSS"],
-            ai: ["Python", "TensorFlow", "PyTorch"]
+        this.name = <span class="code-string">"Yaduraj Singh"</span>;
+        this.role = <span class="code-string">"Full-Stack Developer"</span>;
+        this.languages = [
+            <span class="code-string">"Swift"</span>, 
+            <span class="code-string">"JavaScript"</span>,
+            <span class="code-string">"Python"</span>
+        ];
+        this.expertise = {
+            ios: <span class="code-string">"Native iOS Apps"</span>,
+            web: <span class="code-string">"Interactive Experiences"</span>,
+            ai: <span class="code-string">"ML Solutions"</span>
         };
     }
     
-    createSolution(problem) {
-        return this.skills
-            .map(skill => skill.apply(problem))
-            .filter(result => result.isInnovative())
-            .sort(result => result.efficiency)
-            .pop();
+    <span class="code-function">solveProblems</span>() {
+        return this.languages
+            .map(<span class="code-param">lang</span> => 
+                this.<span class="code-function">code</span>(lang))
+            .filter(<span class="code-param">solution</span> => 
+                solution.isEfficient())
+            .<span class="code-function">deliver</span>();
     }
 }</code></pre>
                 </div>
