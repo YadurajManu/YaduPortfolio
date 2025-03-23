@@ -13,6 +13,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <script src="https://unpkg.com/scrollreveal@4.0.9/dist/scrollreveal.min.js"></script>
 </head>
 <body>
     <nav class="navbar">
@@ -36,7 +37,7 @@
         <div class="hero-content">
             <div class="hero-text">
                 <div class="hero-intro">Hello, I'm</div>
-                <h1>Yaduraj Singh</h1>
+                <h1 data-text="Yaduraj Singh">Yaduraj Singh</h1>
                 <div class="typewriter-container">
                     <p class="tagline">iOS Developer | Web Developer | AI/ML Engineer</p>
                 </div>
@@ -48,6 +49,11 @@
             </div>
             <div class="hero-visual">
                 <div class="code-block">
+                    <div class="code-dots">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                    </div>
                     <pre><code>
 class Developer {
     constructor() {
@@ -76,6 +82,7 @@ class Developer {
                 <div class="mouse">
                     <div class="wheel"></div>
                 </div>
+                <div class="scroll-text">Scroll Down</div>
             </a>
         </div>
     </section>
@@ -267,17 +274,17 @@ class Developer {
             </div>
             <div class="github-content">
                 <div class="github-stats">
-                    <div class="stat-card">
+                    <div class="stat-card" data-tilt data-tilt-max="10">
                         <i class="fab fa-github"></i>
                         <h3>35+</h3>
                         <p>Repositories</p>
                     </div>
-                    <div class="stat-card">
+                    <div class="stat-card" data-tilt data-tilt-max="10">
                         <i class="fas fa-code-branch"></i>
                         <h3>100+</h3>
                         <p>Contributions</p>
                     </div>
-                    <div class="stat-card">
+                    <div class="stat-card" data-tilt data-tilt-max="10">
                         <i class="fas fa-star"></i>
                         <h3>5+</h3>
                         <p>Stars</p>
@@ -296,7 +303,7 @@ class Developer {
                 <div class="featured-repos">
                     <h3>Featured Repositories</h3>
                     <div class="repos-grid">
-                        <div class="repo-card">
+                        <div class="repo-card" data-tilt data-tilt-max="10" data-tilt-scale="1.05">
                             <div class="repo-header">
                                 <i class="fas fa-code"></i>
                                 <h4>exoplanet_detection</h4>
@@ -313,7 +320,7 @@ class Developer {
                             </div>
                             <a href="https://github.com/YadurajManu/exoplanet_detection" target="_blank" class="btn secondary">View Repository</a>
                         </div>
-                        <div class="repo-card">
+                        <div class="repo-card" data-tilt data-tilt-max="10" data-tilt-scale="1.05">
                             <div class="repo-header">
                                 <i class="fas fa-robot"></i>
                                 <h4>Jarvis</h4>
@@ -330,7 +337,7 @@ class Developer {
                             </div>
                             <a href="https://github.com/YadurajManu/Jarvis" target="_blank" class="btn secondary">View Repository</a>
                         </div>
-                        <div class="repo-card">
+                        <div class="repo-card" data-tilt data-tilt-max="10" data-tilt-scale="1.05">
                             <div class="repo-header">
                                 <i class="fas fa-fire"></i>
                                 <h4>CrazyShiit</h4>
@@ -347,7 +354,7 @@ class Developer {
                             </div>
                             <a href="https://github.com/YadurajManu/CrazyShiit" target="_blank" class="btn secondary">View Repository</a>
                         </div>
-                        <div class="repo-card">
+                        <div class="repo-card" data-tilt data-tilt-max="10" data-tilt-scale="1.05">
                             <div class="repo-header">
                                 <i class="fas fa-mobile-alt"></i>
                                 <h4>Muni</h4>
@@ -364,7 +371,7 @@ class Developer {
                             </div>
                             <a href="https://github.com/YadurajManu/Muni" target="_blank" class="btn secondary">View Repository</a>
                         </div>
-                        <div class="repo-card">
+                        <div class="repo-card" data-tilt data-tilt-max="10" data-tilt-scale="1.05">
                             <div class="repo-header">
                                 <i class="fas fa-brain"></i>
                                 <h4>Rishi</h4>
@@ -445,6 +452,15 @@ class Developer {
         </div>
     </footer>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.7.0/vanilla-tilt.min.js"></script>
     <script src="script.js"></script>
+    <script>
+        VanillaTilt.init(document.querySelectorAll("[data-tilt]"), {
+            max: 10,
+            speed: 400,
+            glare: true,
+            "max-glare": 0.3,
+        });
+    </script>
 </body>
 </html> 
