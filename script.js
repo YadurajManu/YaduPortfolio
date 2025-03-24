@@ -768,4 +768,409 @@ document.addEventListener('DOMContentLoaded', function() {
             observer.observe(tag);
         });
     }
+});
+
+// CV Section - Resume Builder and Parallax Effects
+document.addEventListener('DOMContentLoaded', function() {
+    // Parallax effect for CV section
+    const cvSection = document.querySelector('.cv');
+    const parallaxLayers = document.querySelectorAll('.parallax-bg');
+    
+    if (cvSection && parallaxLayers.length > 0) {
+        window.addEventListener('scroll', function() {
+            const scrollTop = window.pageYOffset;
+            const sectionTop = cvSection.offsetTop;
+            const sectionHeight = cvSection.offsetHeight;
+            
+            // Only apply parallax when CV section is in view
+            if (scrollTop + window.innerHeight > sectionTop && scrollTop < sectionTop + sectionHeight) {
+                const relativeScroll = (scrollTop - sectionTop + window.innerHeight);
+                const scrollPercentage = relativeScroll / (sectionHeight + window.innerHeight);
+                
+                parallaxLayers.forEach((layer, index) => {
+                    const speed = (index + 1) * 0.1;
+                    const yPos = scrollPercentage * 100 * speed;
+                    layer.style.transform = `translateY(${yPos}px) translateZ(-${(index + 1) * 5}px) scale(${1 + (index + 1) * 0.5})`;
+                });
+            }
+        });
+    }
+    
+    // Resume sections animation
+    const resumeSections = document.querySelectorAll('.resume-section');
+    
+    resumeSections.forEach((section, index) => {
+        section.style.setProperty('--index', index);
+    });
+    
+    // Initialize empty resume content
+    initializeEmptyResumeContent();
+    
+    // Resume Builder Functionality
+    const resumeBuilder = {
+        items: {
+            skills: [],
+            experience: [],
+            education: [],
+            projects: []
+        },
+        
+        init: function() {
+            this.bindUIActions();
+            this.setupDragAndDrop();
+        },
+        
+        bindUIActions: function() {
+            // Add item buttons
+            const addButtons = document.querySelectorAll('.add-to-resume');
+            
+            addButtons.forEach(button => {
+                button.addEventListener('click', (e) => {
+                    const item = e.target.closest('.builder-item');
+                    this.addItemToResume(item);
+                });
+            });
+            
+            // Reset button
+            const resetButton = document.getElementById('reset-resume');
+            if (resetButton) {
+                resetButton.addEventListener('click', () => {
+                    this.resetResume();
+                });
+            }
+            
+            // Download button
+            const downloadButton = document.getElementById('download-resume');
+            if (downloadButton) {
+                downloadButton.addEventListener('click', () => {
+                    this.downloadResume();
+                });
+            }
+        },
+        
+        setupDragAndDrop: function() {
+            const draggableItems = document.querySelectorAll('.builder-item');
+            const resumeDropZones = {
+                skills: document.querySelector('.resume-skills-content'),
+                experience: document.querySelector('.resume-experience-content'),
+                education: document.querySelector('.resume-education-content'),
+                projects: document.querySelector('.resume-projects-content')
+            };
+            
+            draggableItems.forEach(item => {
+                item.addEventListener('dragstart', (e) => {
+                    item.classList.add('dragging');
+                    e.dataTransfer.setData('text/plain', JSON.stringify({
+                        id: item.dataset.id,
+                        type: item.dataset.type,
+                        content: item.querySelector('.item-content').textContent
+                    }));
+                });
+                
+                item.addEventListener('dragend', () => {
+                    item.classList.remove('dragging');
+                });
+            });
+            
+            // Set up drop zones
+            Object.keys(resumeDropZones).forEach(key => {
+                const zone = resumeDropZones[key];
+                if (zone) {
+                    zone.addEventListener('dragover', (e) => {
+                        e.preventDefault();
+                        zone.classList.add('drag-over');
+                    });
+                    
+                    zone.addEventListener('dragleave', () => {
+                        zone.classList.remove('drag-over');
+                    });
+                    
+                    zone.addEventListener('drop', (e) => {
+                        e.preventDefault();
+                        zone.classList.remove('drag-over');
+                        
+                        try {
+                            const data = JSON.parse(e.dataTransfer.getData('text/plain'));
+                            this.addItemToResume(null, data);
+                        } catch (error) {
+                            console.error('Error parsing dropped item:', error);
+                        }
+                    });
+                }
+            });
+        },
+        
+        addItemToResume: function(element, data = null) {
+            let itemData;
+            
+            if (element) {
+                // Get data from DOM element
+                itemData = {
+                    id: element.dataset.id,
+                    type: element.dataset.type,
+                    content: element.querySelector('.item-content').textContent
+                };
+                
+                // Mark as added
+                element.classList.add('added-to-resume');
+            } else if (data) {
+                // Use provided data
+                itemData = data;
+                
+                // Find and mark the corresponding element
+                const correspondingElement = document.querySelector(`.builder-item[data-id="${data.id}"]`);
+                if (correspondingElement) {
+                    correspondingElement.classList.add('added-to-resume');
+                }
+            } else {
+                return;
+            }
+            
+            // Check if already added
+            if (this.items[itemData.type].some(item => item.id === itemData.id)) {
+                return;
+            }
+            
+            // Add to data model
+            this.items[itemData.type].push(itemData);
+            
+            // Add to UI
+            this.updateResumeUI();
+        },
+        
+        updateResumeUI: function() {
+            // Update Skills
+            const skillsContainer = document.querySelector('.resume-skills-content');
+            if (skillsContainer) {
+                skillsContainer.innerHTML = '';
+                
+                this.items.skills.forEach((skill, index) => {
+                    const skillElement = document.createElement('div');
+                    skillElement.classList.add('resume-skill', 'draggable-item');
+                    skillElement.dataset.id = skill.id;
+                    skillElement.style.setProperty('--index', index);
+                    skillElement.textContent = skill.content;
+                    
+                    // Add remove functionality
+                    skillElement.addEventListener('click', () => {
+                        this.removeItem(skill.type, skill.id);
+                    });
+                    
+                    skillsContainer.appendChild(skillElement);
+                });
+            }
+            
+            // Update Experience
+            const experienceContainer = document.querySelector('.resume-experience-content');
+            if (experienceContainer) {
+                experienceContainer.innerHTML = '';
+                
+                this.items.experience.forEach((exp, index) => {
+                    const expElement = document.createElement('div');
+                    expElement.classList.add('resume-experience-item', 'draggable-item');
+                    expElement.dataset.id = exp.id;
+                    expElement.style.setProperty('--index', index);
+                    
+                    const title = document.createElement('h5');
+                    title.textContent = exp.content;
+                    
+                    expElement.appendChild(title);
+                    
+                    // Add remove functionality
+                    expElement.addEventListener('click', () => {
+                        this.removeItem(exp.type, exp.id);
+                    });
+                    
+                    experienceContainer.appendChild(expElement);
+                });
+            }
+            
+            // Update Education
+            const educationContainer = document.querySelector('.resume-education-content');
+            if (educationContainer) {
+                educationContainer.innerHTML = '';
+                
+                this.items.education.forEach((edu, index) => {
+                    const eduElement = document.createElement('div');
+                    eduElement.classList.add('resume-education-item', 'draggable-item');
+                    eduElement.dataset.id = edu.id;
+                    eduElement.style.setProperty('--index', index);
+                    
+                    const title = document.createElement('h5');
+                    title.textContent = edu.content;
+                    
+                    eduElement.appendChild(title);
+                    
+                    // Add remove functionality
+                    eduElement.addEventListener('click', () => {
+                        this.removeItem(edu.type, edu.id);
+                    });
+                    
+                    educationContainer.appendChild(eduElement);
+                });
+            }
+            
+            // Update Projects
+            const projectsContainer = document.querySelector('.resume-projects-content');
+            if (projectsContainer) {
+                projectsContainer.innerHTML = '';
+                
+                this.items.projects.forEach((proj, index) => {
+                    const projElement = document.createElement('div');
+                    projElement.classList.add('resume-project-item', 'draggable-item');
+                    projElement.dataset.id = proj.id;
+                    projElement.style.setProperty('--index', index);
+                    
+                    const title = document.createElement('h5');
+                    title.textContent = proj.content;
+                    
+                    projElement.appendChild(title);
+                    
+                    // Add remove functionality
+                    projElement.addEventListener('click', () => {
+                        this.removeItem(proj.type, proj.id);
+                    });
+                    
+                    projectsContainer.appendChild(projElement);
+                });
+            }
+        },
+        
+        removeItem: function(type, id) {
+            // Remove from data model
+            this.items[type] = this.items[type].filter(item => item.id !== id);
+            
+            // Remove 'added' class from builder item
+            const builderItem = document.querySelector(`.builder-item[data-id="${id}"]`);
+            if (builderItem) {
+                builderItem.classList.remove('added-to-resume');
+            }
+            
+            // Update UI
+            this.updateResumeUI();
+        },
+        
+        resetResume: function() {
+            // Clear data model
+            Object.keys(this.items).forEach(key => {
+                this.items[key] = [];
+            });
+            
+            // Remove 'added' class from all items
+            document.querySelectorAll('.builder-item').forEach(item => {
+                item.classList.remove('added-to-resume');
+            });
+            
+            // Update UI
+            this.updateResumeUI();
+        },
+        
+        downloadResume: function() {
+            // Create notification
+            const notification = document.createElement('div');
+            notification.style.position = 'fixed';
+            notification.style.bottom = '20px';
+            notification.style.right = '20px';
+            notification.style.padding = '15px 20px';
+            notification.style.backgroundColor = 'rgba(0, 0, 0, 0.8)';
+            notification.style.color = 'white';
+            notification.style.borderRadius = '8px';
+            notification.style.boxShadow = '0 2px 10px rgba(0, 0, 0, 0.2)';
+            notification.style.zIndex = '9999';
+            notification.style.transform = 'translateY(100px)';
+            notification.style.opacity = '0';
+            notification.style.transition = 'transform 0.3s ease, opacity 0.3s ease';
+            notification.textContent = 'Preparing your custom resume...';
+            
+            document.body.appendChild(notification);
+            
+            // Show notification
+            setTimeout(() => {
+                notification.style.transform = 'translateY(0)';
+                notification.style.opacity = '1';
+            }, 10);
+            
+            // In a real implementation, you would use a PDF generation library
+            // For this example, we'll simulate a download after a delay
+            setTimeout(() => {
+                notification.textContent = 'Your resume has been downloaded!';
+                notification.style.backgroundColor = 'rgba(0, 128, 0, 0.8)';
+                
+                // Hide notification after a delay
+                setTimeout(() => {
+                    notification.style.transform = 'translateY(100px)';
+                    notification.style.opacity = '0';
+                    
+                    // Remove from DOM after animation
+                    setTimeout(() => {
+                        document.body.removeChild(notification);
+                    }, 300);
+                }, 3000);
+                
+                // In a real implementation, the download would start here
+                // window.open('path/to/generated/resume.pdf', '_blank');
+            }, 2000);
+        }
+    };
+    
+    function initializeEmptyResumeContent() {
+        // Add empty messages to resume sections
+        const skillsContent = document.querySelector('.resume-skills-content');
+        const experienceContent = document.querySelector('.resume-experience-content');
+        const educationContent = document.querySelector('.resume-education-content');
+        const projectsContent = document.querySelector('.resume-projects-content');
+        
+        if (skillsContent) {
+            skillsContent.innerHTML = '<p class="empty-section-message">Drag skills here or click the + button to add them to your resume</p>';
+        }
+        
+        if (experienceContent) {
+            experienceContent.innerHTML = '<p class="empty-section-message">Drag experience items here or click the + button to add them to your resume</p>';
+        }
+        
+        if (educationContent) {
+            educationContent.innerHTML = '<p class="empty-section-message">Drag education items here or click the + button to add them to your resume</p>';
+        }
+        
+        if (projectsContent) {
+            projectsContent.innerHTML = '<p class="empty-section-message">Drag projects here or click the + button to add them to your resume</p>';
+        }
+    }
+    
+    // Initialize resume builder
+    resumeBuilder.init();
+    
+    // Mouse move parallax effect for resume paper
+    const resumePaper = document.querySelector('.resume-paper');
+    if (resumePaper) {
+        document.addEventListener('mousemove', function(e) {
+            const cvContent = document.querySelector('.cv-content');
+            if (!cvContent) return;
+            
+            const contentRect = cvContent.getBoundingClientRect();
+            
+            // Only apply effect when mouse is within CV content
+            if (
+                e.clientX >= contentRect.left && 
+                e.clientX <= contentRect.right && 
+                e.clientY >= contentRect.top && 
+                e.clientY <= contentRect.bottom
+            ) {
+                const x = e.clientX / window.innerWidth - 0.5;
+                const y = e.clientY / window.innerHeight - 0.5;
+                
+                resumePaper.style.transform = `
+                    perspective(2000px) 
+                    rotateY(${x * 5}deg) 
+                    rotateX(${-y * 5}deg) 
+                    translateZ(10px)
+                `;
+            }
+        });
+        
+        // Reset transform when mouse leaves
+        document.addEventListener('mouseleave', function() {
+            resumePaper.style.transform = 'perspective(2000px) rotateY(-5deg) translateZ(0)';
+        });
+    }
 }); 

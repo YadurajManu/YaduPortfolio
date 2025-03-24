@@ -26,7 +26,8 @@
                 <li><a href="#home">Home</a></li>
                 <li><a href="#about">About</a></li>
                 <li><a href="#skills">Skills</a></li>
-                <li><a href="#github">GitHub</a></li>
+                <li><a href="#github">Projects</a></li>
+                <li><a href="#cv">Resume</a></li>
                 <li><a href="#contact">Contact</a></li>
             </ul>
         </div>
@@ -450,6 +451,197 @@ class <span class="code-class">Developer</span> {
                         <button type="submit" class="btn">Send Message</button>
                     </div>
                 </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- CV Section with Parallax Effects -->
+    <section id="cv" class="cv">
+        <div class="parallax-container">
+            <div class="parallax-bg parallax-layer-1"></div>
+            <div class="parallax-bg parallax-layer-2"></div>
+            <div class="parallax-bg parallax-layer-3"></div>
+        </div>
+        
+        <div class="container">
+            <div class="section-header">
+                <h2>Resume & Experience</h2>
+                <p class="section-subtitle">Customize and download my resume based on your interests</p>
+            </div>
+            
+            <div class="cv-content">
+                <div class="resume-preview">
+                    <div class="resume-paper">
+                        <div class="resume-header">
+                            <h3>Yaduraj Singh</h3>
+                            <p>iOS Developer | Web Developer | AI/ML Engineer</p>
+                        </div>
+                        
+                        <div class="resume-section" id="resume-skills">
+                            <h4>Skills</h4>
+                            <div class="resume-skills-content">
+                                <!-- Skills will be populated dynamically -->
+                            </div>
+                        </div>
+                        
+                        <div class="resume-section" id="resume-experience">
+                            <h4>Experience</h4>
+                            <div class="resume-experience-content">
+                                <!-- Experience will be populated dynamically -->
+                            </div>
+                        </div>
+                        
+                        <div class="resume-section" id="resume-education">
+                            <h4>Education</h4>
+                            <div class="resume-education-content">
+                                <!-- Education will be populated dynamically -->
+                            </div>
+                        </div>
+                        
+                        <div class="resume-section" id="resume-projects">
+                            <h4>Projects</h4>
+                            <div class="resume-projects-content">
+                                <!-- Projects will be populated dynamically -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="resume-builder">
+                    <div class="builder-header">
+                        <h3>Customize Your Resume</h3>
+                        <p>Drag and drop elements to include in your downloaded resume</p>
+                    </div>
+                    
+                    <div class="builder-sections">
+                        <div class="builder-section">
+                            <h4>Skills</h4>
+                            <div class="builder-items" id="skills-items">
+                                <div class="builder-item" draggable="true" data-type="skill" data-id="ios">
+                                    <span class="item-handle"><i class="fas fa-grip-lines"></i></span>
+                                    <span class="item-content">iOS Development</span>
+                                    <span class="item-actions">
+                                        <button class="add-to-resume" title="Add to Resume"><i class="fas fa-plus"></i></button>
+                                    </span>
+                                </div>
+                                <div class="builder-item" draggable="true" data-type="skill" data-id="swift">
+                                    <span class="item-handle"><i class="fas fa-grip-lines"></i></span>
+                                    <span class="item-content">Swift</span>
+                                    <span class="item-actions">
+                                        <button class="add-to-resume" title="Add to Resume"><i class="fas fa-plus"></i></button>
+                                    </span>
+                                </div>
+                                <div class="builder-item" draggable="true" data-type="skill" data-id="js">
+                                    <span class="item-handle"><i class="fas fa-grip-lines"></i></span>
+                                    <span class="item-content">JavaScript</span>
+                                    <span class="item-actions">
+                                        <button class="add-to-resume" title="Add to Resume"><i class="fas fa-plus"></i></button>
+                                    </span>
+                                </div>
+                                <div class="builder-item" draggable="true" data-type="skill" data-id="python">
+                                    <span class="item-handle"><i class="fas fa-grip-lines"></i></span>
+                                    <span class="item-content">Python</span>
+                                    <span class="item-actions">
+                                        <button class="add-to-resume" title="Add to Resume"><i class="fas fa-plus"></i></button>
+                                    </span>
+                                </div>
+                                <div class="builder-item" draggable="true" data-type="skill" data-id="ml">
+                                    <span class="item-handle"><i class="fas fa-grip-lines"></i></span>
+                                    <span class="item-content">Machine Learning</span>
+                                    <span class="item-actions">
+                                        <button class="add-to-resume" title="Add to Resume"><i class="fas fa-plus"></i></button>
+                                    </span>
+                                </div>
+                                <div class="builder-item" draggable="true" data-type="skill" data-id="ui">
+                                    <span class="item-handle"><i class="fas fa-grip-lines"></i></span>
+                                    <span class="item-content">UI/UX Design</span>
+                                    <span class="item-actions">
+                                        <button class="add-to-resume" title="Add to Resume"><i class="fas fa-plus"></i></button>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="builder-section">
+                            <h4>Experience</h4>
+                            <div class="builder-items" id="experience-items">
+                                <div class="builder-item" draggable="true" data-type="experience" data-id="exp1">
+                                    <span class="item-handle"><i class="fas fa-grip-lines"></i></span>
+                                    <span class="item-content">Senior iOS Developer at Tech Company (2021-Present)</span>
+                                    <span class="item-actions">
+                                        <button class="add-to-resume" title="Add to Resume"><i class="fas fa-plus"></i></button>
+                                    </span>
+                                </div>
+                                <div class="builder-item" draggable="true" data-type="experience" data-id="exp2">
+                                    <span class="item-handle"><i class="fas fa-grip-lines"></i></span>
+                                    <span class="item-content">Full Stack Developer at Web Solutions (2019-2021)</span>
+                                    <span class="item-actions">
+                                        <button class="add-to-resume" title="Add to Resume"><i class="fas fa-plus"></i></button>
+                                    </span>
+                                </div>
+                                <div class="builder-item" draggable="true" data-type="experience" data-id="exp3">
+                                    <span class="item-handle"><i class="fas fa-grip-lines"></i></span>
+                                    <span class="item-content">Machine Learning Intern at AI Startup (2018-2019)</span>
+                                    <span class="item-actions">
+                                        <button class="add-to-resume" title="Add to Resume"><i class="fas fa-plus"></i></button>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="builder-section">
+                            <h4>Education</h4>
+                            <div class="builder-items" id="education-items">
+                                <div class="builder-item" draggable="true" data-type="education" data-id="edu1">
+                                    <span class="item-handle"><i class="fas fa-grip-lines"></i></span>
+                                    <span class="item-content">Master's in Computer Science, University Name (2018-2020)</span>
+                                    <span class="item-actions">
+                                        <button class="add-to-resume" title="Add to Resume"><i class="fas fa-plus"></i></button>
+                                    </span>
+                                </div>
+                                <div class="builder-item" draggable="true" data-type="education" data-id="edu2">
+                                    <span class="item-handle"><i class="fas fa-grip-lines"></i></span>
+                                    <span class="item-content">Bachelor's in Computer Engineering, University Name (2014-2018)</span>
+                                    <span class="item-actions">
+                                        <button class="add-to-resume" title="Add to Resume"><i class="fas fa-plus"></i></button>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="builder-section">
+                            <h4>Projects</h4>
+                            <div class="builder-items" id="projects-items">
+                                <div class="builder-item" draggable="true" data-type="project" data-id="proj1">
+                                    <span class="item-handle"><i class="fas fa-grip-lines"></i></span>
+                                    <span class="item-content">iOS Music Streaming App</span>
+                                    <span class="item-actions">
+                                        <button class="add-to-resume" title="Add to Resume"><i class="fas fa-plus"></i></button>
+                                    </span>
+                                </div>
+                                <div class="builder-item" draggable="true" data-type="project" data-id="proj2">
+                                    <span class="item-handle"><i class="fas fa-grip-lines"></i></span>
+                                    <span class="item-content">E-commerce Web Platform</span>
+                                    <span class="item-actions">
+                                        <button class="add-to-resume" title="Add to Resume"><i class="fas fa-plus"></i></button>
+                                    </span>
+                                </div>
+                                <div class="builder-item" draggable="true" data-type="project" data-id="proj3">
+                                    <span class="item-handle"><i class="fas fa-grip-lines"></i></span>
+                                    <span class="item-content">Machine Learning Image Recognition System</span>
+                                    <span class="item-actions">
+                                        <button class="add-to-resume" title="Add to Resume"><i class="fas fa-plus"></i></button>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="builder-actions">
+                        <button id="reset-resume" class="btn secondary">Reset Resume</button>
+                        <button id="download-resume" class="btn primary">Download PDF</button>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
